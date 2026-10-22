@@ -1,0 +1,30 @@
+.button {
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+
+  background: var(--accent); 
+  color: #00343b;
+  border: none;
+
+  box-shadow: 0 0 14px rgba(0, 255, 255, 0.35);
+  transition: 0.2s ease;
+  margin: 0px 10px ;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--accent-2); 
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-strong);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button .delete{
+    background-color: red;   
+}

@@ -1,0 +1,77 @@
+.ban-container {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 50px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.ban-card {
+  background: var(--card);
+  border-radius: 14px;
+  border: 1px solid rgba(0, 255, 255, 0.08);
+  box-shadow: var(--shadow);
+  padding: 32px;
+  width: 350px;
+}
+
+.ban-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.ban-card label {
+  color: var(--text);
+  font-weight: 600;
+  margin-top: 14px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  display: block;
+}
+
+.ban-card .ban-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  background: #0a1d24;
+  color: var(--text);
+  margin-bottom: 10px;
+  transition: 0.2s ease;
+}
+
+.ban-card .ban-input::placeholder {
+  color: var(--muted);
+}
+
+.ban-card .ban-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.35);
+  background: #0c222b;
+  color: var(--text);
+}
+
+.ban-card .ban-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  background: var(--accent);
+  border: none;
+  color: #00343b;
+  box-shadow: 0 0 14px rgba(0, 255, 255, 0.3);
+  transition: 0.2s ease;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.ban-card .ban-btn:hover {
+  background: var(--accent-2);
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-2px);
+}

@@ -1,0 +1,14 @@
+.title-page {
+    margin: 20px 0 0 0;
+    color: var(--accent);
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}

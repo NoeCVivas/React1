@@ -1,0 +1,173 @@
+/* * {
+outline: 1px dashed red;
+} */
+.tabla-container {
+  background: var(--card);
+  border-radius: 14px;
+  border: 1px solid rgba(0, 255, 255, 0.08);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text);
+  font-size: 15px;
+  min-width: 700px;
+  background-color: #094e64;
+}
+
+.thead-dark {
+  background: #0f2e38;
+}
+
+.tabla thead th {
+  padding: 14px 18px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--accent);
+  border-bottom: 1px solid rgba(0, 255, 255, 0.15);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.45);
+}
+
+.tabla tbody tr {
+  transition: 0.15s ease;
+}
+
+.tabla tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.tabla tbody tr:hover {
+  background: rgba(0, 255, 255, 0.05);
+}
+
+.tabla td {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  background-color: #094e64;
+}
+
+
+.tabla th.acciones-col{
+  text-align: center;
+}
+
+.estado-pill {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  display: inline-block;
+}
+
+.estado-activo {
+  background: rgba(0, 255, 166, 0.12);
+  color: var(--accent-2);
+  border: 1px solid rgba(0, 255, 166, 0.4);
+}
+
+.estado-inactivo {
+  background: rgba(255, 68, 68, 0.1);
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 68, 68, 0.3);
+}
+
+.tabla .acciones-btn {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-action {
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  transition: 0.2s;
+}
+
+.btn-action:hover {
+  background: rgba(0, 255, 255, 0.08);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+.btn-delete {
+  border-color: #ff4c4c;
+  color: #ff4c4c;
+}
+
+.btn-delete:hover {
+  background: rgba(255, 76, 76, 0.12);
+  box-shadow: 0 0 12px rgba(255, 76, 76, 0.35);
+}
+.tr{
+    background-color: #094e64;
+    width: 100% !important;
+}
+
+@media (max-width: 1024px) {
+  
+  .tabla-container {
+    padding: 14px;
+  }
+
+  .tabla td,
+  .tabla thead th {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .btn-action {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .tabla .acciones-btn {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .tabla-container {
+    padding: 10px;
+    overflow-x: auto;
+  }
+
+  .tabla {
+    min-width: 600px; 
+    font-size: 13px;
+  }
+
+  .tabla td,
+  .tabla thead th {
+    padding: 10px;
+  }
+
+  .tabla thead th {
+    font-size: 13px;
+  }
+
+  .btn-action {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+
+  .tabla .acciones-btn {
+    gap: 6px;
+  }
+
+  .estado-pill {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+}
