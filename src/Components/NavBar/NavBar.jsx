@@ -10,63 +10,61 @@ import { showLogoutConfirmAlert } from '../Alert/Alert';
 
 function NavBar() {
   const navigate = useNavigate();
-
   const userString = localStorage.getItem('user');
   const user = userString ? JSON.parse(userString) : null;
   const isAuthenticated = !!user;
 
-  const handleLogout = async () => {
-    if (!user || !user.id) {
-      localStorage.removeItem('user');
-      navigate('/login');
-      return;
-    }
-    try { 
-      let response = await fetch(`http://localhost:5052/Session/${user.id}`, {
-        method: 'POST'
-      });
-
-    } catch (error) {
-      alert(`Error al intentar cerrar sesión: ${error}`);
-    } finally {
-      localStorage.removeItem('user');
-      navigate('/login');
-    }
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    navigate('/login');
   };
 
   return (
-    <Navbar expand="lg" className="topbar">
-      <div className="logo">&lt;/&gt; ConPila</div>
-
-      <Navbar.Toggle aria-controls="nav" />
-      <Navbar.Collapse id="nav">
+    <Navbar bg="dark" variant="dark" expand="lg" className="px-3 border-bottom border-secondary">
+      <Container fluid>
         
-        <div className="nav-links me-auto">
-          {isAuthenticated && (
-            <>
-              <Link className= "title" to="/users">User</Link>
-              <Link className= "title" to="/admin">Admin</Link>
-            </>
-          )}
-        </div>
+        {/* LOGO */}
+        <Navbar.Brand as={Link} to="/" className="d-flex align-items-center gap-2 text-white fw-bold">
+          <img 
+            src="/iconoconpila.ico" 
+            alt="ConPila Logo" 
+            style={{ height: '35px', width: 'auto', objectFit: 'contain' }} 
+          />
+          <span>ConPila</span>
+        </Navbar.Brand>
 
-        <div className="right-section ms-auto">
-          {isAuthenticated ? (
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        
+        <Navbar.Collapse id="basic-navbar-nav">
+          
+          {/* ENLACES DE NAVEGACIÓN: Agregamos fw-bold para negrita y text-white para que se lean */}
+          <Nav className="me-auto">
+            {isAuthenticated && (
               <>
-                <span>Bienvenido, {user?.userName}</span>
-                <button 
-                    className="logout-btn" 
-                    onClick={() => showLogoutConfirmAlert(handleLogout)}
-                >
+                <Nav.Link as={Link} to="/users" className="text-white fw-bold">User</Nav.Link>
+                <Nav.Link as={Link} to="/admin" className="text-white fw-bold">Admin</Nav.Link>
+              </>
+            )}
+          </Nav>
+
+          {/* SECCIÓN DERECHA */}
+          <Nav className="ms-auto d-flex align-items-center gap-3">
+            {isAuthenticated ? (
+              <>
+                <span className="text-light">
+                  Bienvenido, <strong className="text-white">{user?.userName}</strong>
+                </span>
+                <Button variant="danger" onClick={() => showLogoutConfirmAlert(handleLogout)}>
                   Cerrar Sesión
-                </button>
+                </Button>
               </>
             ) : (
-              <Link to="/login">Login</Link>
+              <Nav.Link as={Link} to="/login" className="text-white fw-bold">Login</Nav.Link>
             )}
-        </div>
-
-      </Navbar.Collapse>
+          </Nav>
+          
+        </Navbar.Collapse>
+      </Container>
     </Navbar>
   );
 }

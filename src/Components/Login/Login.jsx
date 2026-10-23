@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Alert, Container, Card } from 'react-bootstrap';
 import './Login.css';
 
@@ -23,7 +23,6 @@ const Login = () => {
 
     try {
       // --- TRUCO PARA ENTRAR SIN BACKEND ---
-      // (Ya no hay fetch, creamos un usuario falso)
       const fakeUser = {
         id: 1,
         userName: userName,
@@ -47,8 +46,17 @@ const Login = () => {
   return (
     <div className="contenedor-general">
       <header className="topbar">
-        <div className="logo">&lt;/&gt; ConPila</div>
+        {/* Logo con imagen agregada */}
+        <Link to="/" className="logo d-flex align-items-center text-decoration-none gap-2" style={{ color: 'white', fontSize: '24px', fontWeight: 'bold' }}>
+          <img 
+            src="/iconoconpila.ico" 
+            alt="ConPila Logo" 
+            style={{ height: '35px', width: 'auto', objectFit: 'contain' }} 
+          />
+          <span>ConPila</span>
+        </Link>
       </header>
+      
       <Container fluid className="login-container">
         <div className="login-wrapper">
           <Card className="login-card">

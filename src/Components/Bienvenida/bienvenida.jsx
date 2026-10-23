@@ -1,11 +1,20 @@
 import React from "react";
+import { Link } from 'react-router-dom'; // Importamos Link por si quieres volver al inicio al hacer clic
 import './bienvenida.css';
 
 function Bienvenida() {
     return (
         <div className="contenedor-general">
                 <header className="topbar">
-                    <div className="logo">&lt;/&gt; ConPila</div>
+                    {/* Contenedor del logo con la imagen y el texto */}
+                    <Link to="/" className="logo d-flex align-items-center text-decoration-none gap-2" style={{ color: 'white', fontSize: '24px', fontWeight: 'bold' }}>
+                        <img 
+                            src="/iconoconpila.ico" 
+                            alt="ConPila Logo" 
+                            style={{ height: '35px', width: 'auto', objectFit: 'contain' }} 
+                        />
+                        <span>ConPila</span>
+                    </Link>
                 </header>
 
                 <main className="container">
@@ -19,7 +28,8 @@ function Bienvenida() {
                     <p>Accedé con tu cuenta ADMIN.</p>
 
                     <div className="buttons">
-                        <a className="btn btn-primary" href="/login">Iniciar sesión</a>
+                        {/* Recomiendo cambiar el <a> por <Link> para que no recargue la página */}
+                        <Link className="btn btn-primary" to="/login">Iniciar sesión</Link>
                     </div>
                     </section>
                 </main>

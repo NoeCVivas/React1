@@ -1,138 +1,157 @@
-:root{
-  --bg:#071821;
-  --card:#0d232c;
-  --accent:#00e0ff;
-  --accent-2:#00ffa6;
-  --text:#eafaff;
-  --muted:#96aab8;
-  --radius:14px;
-  --shadow:0 0 22px rgba(0,255,255,0.15);
-  --shadow-strong:0 0 38px rgba(0,255,255,0.26);
+:root {
+  /* Fondo principal casi negro */
+  --bg: #0a0a0a; 
+  /* Fondo de las tarjetas (gris muy oscuro) */
+  --card: #1a1a1a; 
+  /* Acentos en gris claro y blanco */
+  --accent: #cccccc; 
+  --accent-2: #ffffff; 
+  /* Texto principal y secundario */
+  --text: #f5f5f5; 
+  --muted: #888888; 
+  
+  --radius: 14px;
+  /* Sombras negras en lugar de brillos de colores */
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+  --shadow-strong: 0 8px 25px rgba(0, 0, 0, 1);
 }
 
-*{box-sizing:border-box}
-.contenedor-general{
-  margin:0;
-  font-family:Inter, sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  min-height:100vh;
+* {
+  box-sizing: border-box;
 }
 
-
-.topbar{
-  background:#00c9e9;
-  padding:16px 32px;
-  font-size:24px;
-  font-weight:700;
-  color:#fff;
-  letter-spacing:0.5px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.3);
+.contenedor-general {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
 }
-.logo{
-  display:flex;
-  align-items:center;
-  gap:6px;
+
+/* Barra superior en gris muy oscuro */
+.topbar {
+  background: #111111;
+  padding: 16px 32px;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #333333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   margin-right: 2%;
 }
 
-.container{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:40px;
-  padding:60px 20px;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 60px 20px;
 }
 
-.hero{
-  text-align:center;
-  max-width:700px;
-  padding:20px;
+.hero {
+  text-align: center;
+  max-width: 700px;
+  padding: 20px;
 }
 
-.hero h1{
-  margin:0 0 10px;
-  font-size:36px;
+.hero h1 {
+  margin: 0 0 10px;
+  font-size: 36px;
+  color: var(--text);
 }
 
-.gradient{
-  background:linear-gradient(90deg, var(--accent), var(--accent-2));
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+/* Gradiente de grises */
+.gradient {
+  background: linear-gradient(90deg, #888888, #ffffff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.hero p{
-  margin:0;
-  font-size:18px;
-  color:var(--muted);
+.hero p {
+  margin: 0;
+  font-size: 18px;
+  color: var(--muted);
 }
 
-.card-login{
-  background:var(--card);
-  padding:32px;
-  width:100%;
-  max-width:420px;
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  text-align:center;
-  border:1px solid rgba(0,255,255,0.06);
+/* Tarjeta de login oscura */
+.card-login {
+  background: var(--card);
+  padding: 32px;
+  width: 100%;
+  max-width: 420px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+  border: 1px solid #333333;
 }
 
-.card-login h2{
-  margin:0 0 12px;
-  font-size:22px;
+.card-login h2 {
+  margin: 0 0 12px;
+  font-size: 22px;
+  color: var(--text);
 }
 
-.card-login p{
-  margin:0 0 26px;
-  color:var(--muted);
+.card-login p {
+  margin: 0 0 26px;
+  color: var(--muted);
 }
 
-.buttons{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  justify-content:center;
+.buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.btn{
-  padding:12px 18px;
-  font-size:15px;
-  font-weight:600;
-  border-radius:10px;
-  text-decoration:none;
-  cursor:pointer;
-  transition:0.2s ease;
-  border:0;
+.btn {
+  padding: 12px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+  border: 0;
 }
 
-.btn-primary{
-  background:var(--accent);
-  color:#00343b;
-  box-shadow:0 0 12px rgba(0,255,255,0.25);
+/* Botón principal en gris medio */
+.btn-primary {
+  background: #444444;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-.btn-primary:hover{
-  box-shadow:var(--shadow-strong);
-  transform:translateY(-3px);
+.btn-primary:hover {
+  background: #555555;
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-3px);
 }
 
-.btn-outline{
-  border:1px solid var(--accent);
-  color:var(--accent);
-  background:transparent;
+/* Botón outline en gris */
+.btn-outline {
+  border: 1px solid #666666;
+  color: #cccccc;
+  background: transparent;
 }
 
-.btn-outline:hover{
-  background:rgba(0,255,255,0.08);
+.btn-outline:hover {
+  background: #222222;
+  color: #ffffff;
 }
 
-@media(max-width:480px){
-  .hero h1{
-    font-size:28px;
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 28px;
   }
-  .card-login{
-    padding:24px;
+  .card-login {
+    padding: 24px;
   }
 }

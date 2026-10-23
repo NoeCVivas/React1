@@ -1,11 +1,7 @@
-/* * {
-outline: 1px dashed red;
-} */
 .tabla-container {
-  background: var(--card);
-  border-radius: 14px;
-  border: 1px solid rgba(0, 255, 255, 0.08);
-  box-shadow: var(--shadow);
+  background: #1a1a1a; /* Gris oscuro */
+  border-radius: 8px;
+  border: 1px solid #333333;
   padding: 20px;
   margin-top: 20px;
   overflow-x: auto;
@@ -14,23 +10,22 @@ outline: 1px dashed red;
 .tabla {
   width: 100%;
   border-collapse: collapse;
-  color: var(--text);
+  color: #cccccc; /* Texto gris claro */
   font-size: 15px;
   min-width: 700px;
-  background-color: #094e64;
+  background-color: #0a0a0a; /* FONDO NEGRO */
 }
 
 .thead-dark {
-  background: #0f2e38;
+  background: #111111; /* Encabezado casi negro */
 }
 
 .tabla thead th {
   padding: 14px 18px;
   text-align: left;
   font-weight: 700;
-  color: var(--accent);
-  border-bottom: 1px solid rgba(0, 255, 255, 0.15);
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.45);
+  color: #ffffff; /* Texto blanco */
+  border-bottom: 2px solid #444444;
 }
 
 .tabla tbody tr {
@@ -38,22 +33,21 @@ outline: 1px dashed red;
 }
 
 .tabla tbody tr:nth-child(even) {
-  background: rgba(255, 255, 255, 0.02);
+  background: #151515; /* Rayado sutil */
 }
 
 .tabla tbody tr:hover {
-  background: rgba(0, 255, 255, 0.05);
+  background: #222222; /* Gris al pasar el mouse */
 }
 
 .tabla td {
   padding: 14px 18px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  color: var(--text);
-  background-color: #094e64;
+  border-bottom: 1px solid #333333;
+  color: #cccccc;
+  background-color: #242323; /* FONDO NEGRO */
 }
 
-
-.tabla th.acciones-col{
+.tabla th.acciones-col {
   text-align: center;
 }
 
@@ -67,15 +61,15 @@ outline: 1px dashed red;
 }
 
 .estado-activo {
-  background: rgba(0, 255, 166, 0.12);
-  color: var(--accent-2);
-  border: 1px solid rgba(0, 255, 166, 0.4);
+  background: #1a1a1a;
+  color: #ffffff;
+  border: 1px solid #555555;
 }
 
 .estado-inactivo {
-  background: rgba(255, 68, 68, 0.1);
-  color: #ff6b6b;
-  border: 1px solid rgba(255, 68, 68, 0.3);
+  background: #1a1a1a;
+  color: #ff4b4b;
+  border: 1px solid #ff4b4b;
 }
 
 .tabla .acciones-btn {
@@ -88,15 +82,15 @@ outline: 1px dashed red;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
-  border: 1px solid var(--accent);
+  border: 1px solid #555555;
   background: transparent;
-  color: var(--accent);
+  color: #cccccc;
   transition: 0.2s;
 }
 
 .btn-action:hover {
-  background: rgba(0, 255, 255, 0.08);
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.35);
+  background: #181818;
+  color: #ffffff;
   transform: translateY(-2px);
 }
 
@@ -106,68 +100,27 @@ outline: 1px dashed red;
 }
 
 .btn-delete:hover {
-  background: rgba(255, 76, 76, 0.12);
-  box-shadow: 0 0 12px rgba(255, 76, 76, 0.35);
+  background: #331111;
 }
-.tr{
-    background-color: #094e64;
-    width: 100% !important;
+
+.tr {
+  background-color: hsl(0, 2%, 11%);
+  width: 100%; /* Le saqué el !important */
 }
 
 @media (max-width: 1024px) {
-  
-  .tabla-container {
-    padding: 14px;
-  }
-
-  .tabla td,
-  .tabla thead th {
-    padding: 12px 14px;
-    font-size: 14px;
-  }
-
-  .btn-action {
-    padding: 6px 10px;
-    font-size: 13px;
-  }
-
-  .tabla .acciones-btn {
-    gap: 8px;
-  }
+  .tabla-container { padding: 14px; }
+  .tabla td, .tabla thead th { padding: 12px 14px; font-size: 14px; }
+  .btn-action { padding: 6px 10px; font-size: 13px; }
+  .tabla .acciones-btn { gap: 8px; }
 }
 
 @media (max-width: 768px) {
-
-  .tabla-container {
-    padding: 10px;
-    overflow-x: auto;
-  }
-
-  .tabla {
-    min-width: 600px; 
-    font-size: 13px;
-  }
-
-  .tabla td,
-  .tabla thead th {
-    padding: 10px;
-  }
-
-  .tabla thead th {
-    font-size: 13px;
-  }
-
-  .btn-action {
-    padding: 5px 8px;
-    font-size: 12px;
-  }
-
-  .tabla .acciones-btn {
-    gap: 6px;
-  }
-
-  .estado-pill {
-    padding: 4px 8px;
-    font-size: 11px;
-  }
+  .tabla-container { padding: 10px; overflow-x: auto; }
+  .tabla { min-width: 600px; font-size: 13px; }
+  .tabla td, .tabla thead th { padding: 10px; }
+  .tabla thead th { font-size: 13px; }
+  .btn-action { padding: 5px 8px; font-size: 12px; }
+  .tabla .acciones-btn { gap: 6px; }
+  .estado-pill { padding: 4px 8px; font-size: 11px; }
 }
