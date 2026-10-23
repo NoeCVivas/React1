@@ -105,7 +105,7 @@
 
 .tr {
   background-color: hsl(0, 2%, 11%);
-  width: 100%; /* Le saqué el !important */
+  width: 100%; 
 }
 
 @media (max-width: 1024px) {
