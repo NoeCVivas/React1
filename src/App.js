@@ -1,7 +1,6 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-// Usamos 'Components' con C mayúscula como en tu captura de pantalla
 import Error from './Components/Error/Error';
 import Users from './Components/Users/Users';
 import Admin from './Components/Admin/Admin';
