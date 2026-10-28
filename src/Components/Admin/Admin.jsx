@@ -5,80 +5,132 @@ import Paginador from "../Paginador/Paginador";
 import Layout from '../Layout/Layout';
 import './Admin.css';
 import { showDeleteConfirmAlert, showSuccessAlert, showErrorAlert } from '../Alert/Alert';
+import { api } from "../../Services/Api"; 
 
 function Admin() {
     const [query, setQuery] = useState("");
     const [pageNumber, setPageNumber] = useState(1);
     const [users, setUsers] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
-
-    // Arreglo de usuarios falsos para simular la base de datos
-    const mockUsers = [
-        { id: 1, fullName: "Noelia Admin", userName: "noelia@refr", banned: false },
-        { id: 2, fullName: "Juan Pérez", userName: "juanp", banned: false },
-        { id: 3, fullName: "Usuario Baneado", userName: "banned_user", banned: true },
-        { id: 4, fullName: "Admin de Prueba", userName: "admin_test", banned: false },
-        { id: 5, fullName: "Carlos Gomez", userName: "cgomez", banned: false },
-        { id: 6, fullName: "Maria Lopez", userName: "mlopez", banned: false },
-    ];
+    const [loading, setLoading] = useState(false);
 
     const find = (evt) => {
         const { value } = evt.target;
         setQuery(value);
         setPageNumber(1);
-    }
+    };
 
     const fetchData = async () => {
-        // --- SIMULACIÓN DE CARGA DE DATOS ---
-        // Filtramos los datos falsos según lo que se escriba en el buscador
-        const filteredUsers = mockUsers.filter(user =>
-            user.fullName.toLowerCase().includes(query.toLowerCase()) ||
-            user.userName.toLowerCase().includes(query.toLowerCase())
-        );
+        try {
+            setLoading(true);
+            const data = await api.getUsers();
+            
+            let listaUsuarios = data.payload || [];
+            
+            if (query) {
+                const q = query.toLowerCase();
+                listaUsuarios = listaUsuarios.filter(user => 
+                    (user.username && user.username.toLowerCase().includes(q)) ||
+                    (user.email && user.email.toLowerCase().includes(q))
+                );
+            }
 
-        setUsers(filteredUsers);
-        setTotalPages(1); // Simulamos que todo cabe en 1 sola página
-    }
+            setUsers(listaUsuarios);
+            setTotalPages(1); 
+        } catch (err) {
+            showErrorAlert(err.message);
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    const deleteUser = async (userId) => {
-        // --- SIMULACIÓN DE ELIMINACIÓN ---
-        // Mostramos la alerta de éxito
-        showSuccessAlert("Usuario eliminado exitosamente (Simulado)"); 
+    // Función para armar la URL de la imagen correctamente
+    const getImageUrl = (user) => {
+        const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5059";
         
-        // Actualizamos la tabla quitando el usuario seleccionado
-        setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
-    }
+        if (user.avatarUrl) {
+            return user.avatarUrl.startsWith("http") 
+                ? user.avatarUrl 
+                : `${baseUrl}/${user.avatarUrl}`;
+        }
+        return "https://via.placeholder.com/40";
+    };
+
+    const deleteUser = async (userId, username) => {
+        try {
+            await api.deleteUser(userId); 
+            showSuccessAlert(`Usuario ${username} eliminado correctamente`); 
+            setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
+        } catch (err) {
+            showErrorAlert(err.message);
+        }
+    };
 
     useEffect(() => {
         fetchData();
     }, [pageNumber, query]);
-    
+
     return (
         <div className="conteiner-primary">
             <Layout 
-                title="Administadores" 
+                title="Administradores" 
                 searchValue={query} 
                 searchFunc={find}
                 placeholder="Buscar Administrador"
             >
-                <Table>
-                    <tbody>
-                        {
-                            users.map((user) => {
-                                return(
+                {loading ? (
+                    <p style={{ padding: "20px" }}>Cargando usuarios de la base de datos...</p>
+                ) : (
+                    <Table>
+                        <tbody>
+                            {users.map((user) => {
+                                // Mapeamos los datos de tu JSON
+                                const username = user.username || "Sin Usuario";
+                                const email = user.email || "Sin email";
+                                
+                                // Formateamos la fecha (ignorando el 0001 de C#)
+                                let fechaFormateada = "Sin fecha";
+                                if (user.createdAt && user.createdAt !== "0001-01-01T00:00:00") {
+                                    fechaFormateada = new Date(user.createdAt).toLocaleDateString('es-AR');
+                                }
+
+                                return (
                                     <tr key={user.id}>
+                                        {/* 1. Id */}
                                         <td scope="row">{user.id}</td>
-                                        <td>{user.fullName}</td>
-                                        <td>{user.userName}</td>
-                                        <td>{user.banned ? "Baneado" : "Activo"}</td>
+                                        
+                                        {/* 2. Avatar */}
+                                        <td>
+                                            <img 
+                                                src={getImageUrl(user)} 
+                                                alt={`Avatar de ${username}`} 
+                                                style={{ width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover" }} 
+                                                onError={(e) => { e.target.src = "https://via.placeholder.com/40"; }}
+                                            />
+                                        </td>
+
+                                        {/* 3. Username */}
+                                        <td>{username}</td>
+
+                                        {/* 4. Email */}
+                                        <td>{email}</td>
+
+                                        {/* 5. Creado el */}
+                                        <td>{fechaFormateada}</td>
+
+                                        {/* 6. Estado (Falso por ahora, porque no tienes campo banned) */}
+                                        <td>Activo</td>
+
+                                        {/* 7. Acciones */}
                                         <td className="acciones-btn">
                                             <Button 
                                                 className="delete" 
                                                 text="ELIMINAR" 
                                                 callback={() => 
                                                     showDeleteConfirmAlert(
-                                                        () => deleteUser(user.id), 
-                                                        '¿Borrar a ' + user.fullName + '?', 
+                                                        () => deleteUser(user.id, username), 
+                                                        `¿Borrar a ${username}?`, 
                                                         "Esta acción es irreversible."
                                                     )
                                                 }
@@ -91,16 +143,16 @@ function Admin() {
                                             </a>
                                         </td>
                                     </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </Table>
+                                );
+                            })}
+                        </tbody>
+                    </Table>
+                )}
                 
                 <Paginador pageNumber={pageNumber} setPageNumber={setPageNumber} totalPages={totalPages}></Paginador>
             </Layout>
         </div>
-    )
+    );
 }
 
 export default Admin;

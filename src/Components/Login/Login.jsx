@@ -22,22 +22,42 @@ const Login = () => {
     }
 
     try {
-      // --- TRUCO PARA ENTRAR SIN BACKEND ---
-      const fakeUser = {
-        id: 1,
-        userName: userName,
-        role: 'admin',
-        token: 'token-de-prueba-123'
-      };
+      // 1. Llamamos a la API real en C#
+      const response = await fetch("http://localhost:5059/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          username: userName, 
+          password: password 
+        }),
+      });
 
-      localStorage.setItem('user', JSON.stringify(fakeUser));
-      localStorage.setItem('token', 'token-de-prueba-123'); 
-      
-      // Redirigir al dashboard
-      navigate('/users'); 
+      const data = await response.json();
+
+      // 2. Verificamos si el login fue exitoso
+      if (response.ok && data.success) {
+        // Guardamos el token real que nos devuelve C#
+        localStorage.setItem('token', data.payload.token);
+        
+        // Guardamos los datos del usuario (opcional, por si los necesitas)
+        localStorage.setItem('user', JSON.stringify({
+            id: data.payload.id,
+            username: data.payload.userName,
+            urlAvatar: data.payload.urlAvatar
+        }));
+
+        // 3. Redirigimos al dashboard
+        navigate('/users'); 
+      } else {
+        // Si la API devuelve un error (ej. contraseña incorrecta)
+        setError(data.message || 'Credenciales inválidas');
+      }
 
     } catch (err) {
-      setError(err.message || 'Error al iniciar sesión.');
+      setError('Error de conexión con el servidor.');
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -46,7 +66,6 @@ const Login = () => {
   return (
     <div className="contenedor-general">
       <header className="topbar">
-        {/* Logo con imagen agregada */}
         <Link to="/" className="logo d-flex align-items-center text-decoration-none gap-2" style={{ color: 'white', fontSize: '24px', fontWeight: 'bold' }}>
           <img 
             src="/iconoconpila.ico" 

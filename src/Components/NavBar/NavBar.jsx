@@ -52,7 +52,7 @@ function NavBar() {
             {isAuthenticated ? (
               <>
                 <span className="text-light">
-                  Bienvenido, <strong className="text-white">{user?.userName}</strong>
+                  Bienvenido, <strong className="text-white">{user?.username}</strong>
                 </span>
                 <Button variant="danger" onClick={() => showLogoutConfirmAlert(handleLogout)}>
                   Cerrar Sesión

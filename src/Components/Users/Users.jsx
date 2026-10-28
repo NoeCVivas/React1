@@ -4,7 +4,8 @@ import Table from '../Table/Table';
 import Paginador from "../Paginador/Paginador";
 import Layout from '../Layout/Layout'; 
 import './Users.css';
-import { showDeleteConfirmAlert, showErrorAlert } from '../Alert/Alert';
+import { showDeleteConfirmAlert, showSuccessAlert, showErrorAlert } from '../Alert/Alert';
+import { api } from "../../Services/Api";
 
 function Users() {
     const [query, setQuery] = useState("");
@@ -19,37 +20,36 @@ function Users() {
     }
 
     const fetchData = async () => {
-    try {
-        let response = await fetch(`http://localhost:5052/User/${pageNumber}/5/roleUser?query=${query}`);
-        
-        let json = await response.json();
-        setUsers(json.users);
-        setTotalPages(json.totalPages);
-        
-    } catch (error) {
-        showErrorAlert("Error al traer los usuarios. Verifica tu conexión o el estado del servidor.");
-    }
-}
+        try {
+            const data = await api.getUsers();
+            let listaUsuarios = data.payload || [];
+            
+            if (query) {
+                const q = query.toLowerCase();
+                listaUsuarios = listaUsuarios.filter(user => 
+                    (user.username && user.username.toLowerCase().includes(q)) ||
+                    (user.email && user.email.toLowerCase().includes(q))
+                );
+            }
 
-    const deleteUser = async (userId) => {
-    try {
-        const userLogged = JSON.parse(localStorage.getItem('user'));
-        const idUserLogger = userLogged?.id;
-        
-        let response = await fetch(`http://localhost:5052/User?id=${userId}&idUserLogger=${idUserLogger}`, {
-            method: 'DELETE'
-        });
-
-        if (response.ok) {
-            fetchData();
-        
-        } else {
-            showErrorAlert("Error al eliminar el usuario. El servidor rechazó la solicitud.");
+            setUsers(listaUsuarios);
+            setTotalPages(1); 
+        } catch (error) {
+            showErrorAlert("Error al traer los usuarios: " + error.message);
+            console.error(error);
         }
-    } catch (error) {
-        showErrorAlert("Error de conexión. No se pudo conectar con el servicio de eliminación.");
     }
-}
+
+    const deleteUser = async (userId, username) => {
+        try {
+
+            await api.deleteUser(userId);
+            showSuccessAlert(`Usuario ${username} eliminado correctamente`);
+            fetchData();
+        } catch (error) {
+            showErrorAlert("Error de conexión.");
+        }
+    }
 
     useEffect(() => {
         fetchData();
@@ -65,35 +65,54 @@ function Users() {
             >
                 <Table>
                     <tbody>
-                        {
-                            users.map((user) => {
-                                return(
-                                    <tr key={user.id}>
-                                        <td scope="row">{user.id}</td>
-                                        <td>{user.fullName}</td>
-                                        <td>{user.userName}</td>
-                                        <td>{user.banned ? "Baneado" : "Activo"}</td>
-                                        <td className="acciones-btn">
-                                            <Button 
-                                                className="delete" 
-                                                text="ELIMINAR" 
-                                                callback={() => 
-                                                    showDeleteConfirmAlert(() => deleteUser(user.id), 
-                                                        '¿Borrar a ' + user.fullName + '?', 
-                                                        "Esta acción es irreversible.")
-                                                }
-                                            />
-                                            <a href={`/ban?userId=${user.id}`}>
-                                                <Button text="BAN"/>
-                                            </a>
-                                            <a href={`/edit?userId=${user.id}`}>
-                                                <Button text="EDITAR"/>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }
+                        {users.map((user) => {
+                            // Extraemos los datos reales
+                            const username = user.username || "Sin Usuario";
+                            const email = user.email || "Sin email";
+                            
+                            let fechaFormateada = "Sin fecha";
+                            if (user.createdAt && user.createdAt !== "0001-01-01T00:00:00") {
+                                fechaFormateada = new Date(user.createdAt).toLocaleDateString('es-AR');
+                            }
+
+                            const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5059";
+                            const urlImagen = user.avatarUrl ? `${baseUrl}/${user.avatarUrl}` : "https://via.placeholder.com/40";
+
+                            return(
+                                <tr key={user.id}>
+                                    <td scope="row">{user.id}</td>
+                                    <td>
+                                        <img 
+                                            src={urlImagen} 
+                                            alt={`Avatar de ${username}`} 
+                                            style={{ width: "40px", height: "40px", borderRadius: "50%", objectFit: "cover" }} 
+                                            onError={(e) => { e.target.src = "https://via.placeholder.com/40"; }}
+                                        />
+                                    </td>
+                                    <td>{username}</td>
+                                    <td>{email}</td>
+                                    <td>{fechaFormateada}</td>
+                                    <td>Activo</td>
+                                    <td className="acciones-btn">
+                                        <Button 
+                                            className="delete" 
+                                            text="ELIMINAR" 
+                                            callback={() => 
+                                                showDeleteConfirmAlert(() => deleteUser(user.id, username), 
+                                                    `¿Borrar a ${username}?`, 
+                                                    "Esta acción es irreversible.")
+                                            }
+                                        />
+                                        <a href={`/ban?userId=${user.id}`}>
+                                            <Button text="BAN"/>
+                                        </a>
+                                        <a href={`/edit?userId=${user.id}`}>
+                                            <Button text="EDITAR"/>
+                                        </a>
+                                    </td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </Table>
                 

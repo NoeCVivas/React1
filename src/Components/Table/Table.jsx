@@ -6,11 +6,13 @@ export class Table extends PureComponent {
     return (
       <div className="table-responsive">
         <table className="tabla">
-                <thead class="thead-dark">
+                <thead className="thead-dark">
                     <tr className='tr'>
                         <th scope="col">Id</th>
-                        <th scope="col">Nombre Completo</th>
-                        <th scope="col">Nombre de Usuario</th>
+                        <th scope="col">Avatar</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Creado el</th>
                         <th scope="col" className="estado-col">Estado</th>
                         <th scope="col" className="acciones-col">Acciones</th>
                     </tr>
