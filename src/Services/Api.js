@@ -22,7 +22,8 @@ async function fetchData(endpoint, options = {}) {
 }
 
 export const api = {
-  getUsers: async () => fetchData(`/api/user`),
+  getUsers: async (page = 1, size = 5) => fetchData(`/api/user?page=${page}&size=${size}`),
+  
   login: async (username, password) => fetchData(`/api/user/login`, {
     method: "POST",
     body: JSON.stringify({ username, password })

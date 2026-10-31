@@ -25,8 +25,7 @@ function Bienvenida() {
 
                     <section className="card-login">
                     <h2>Ingresá a tu cuenta</h2>
-                    <p>Accedé con tu cuenta ADMIN.</p>
-
+                
                     <div className="buttons">
                         {/* Recomiendo cambiar el <a> por <Link> para que no recargue la página */}
                         <Link className="btn btn-primary" to="/login">Iniciar sesión</Link>
