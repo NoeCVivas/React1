@@ -21,19 +21,20 @@ function Users() {
 
     const fetchData = async () => {
         try {
-            const data = await api.getUsers();
-            let listaUsuarios = data.payload || [];
+            const data = await api.getUsers(pageNumber, 5);
+            
+            let listaUsuarios = data.payload?.users || [];
             
             if (query) {
                 const q = query.toLowerCase();
                 listaUsuarios = listaUsuarios.filter(user => 
-                    (user.username && user.username.toLowerCase().includes(q)) ||
+                    (user.userName && user.userName.toLowerCase().includes(q)) ||
                     (user.email && user.email.toLowerCase().includes(q))
                 );
             }
 
             setUsers(listaUsuarios);
-            setTotalPages(1); 
+            setTotalPages(data.payload.totalPages || 1); 
         } catch (error) {
             showErrorAlert("Error al traer los usuarios: " + error.message);
             console.error(error);

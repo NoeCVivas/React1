@@ -23,9 +23,9 @@ function Admin() {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const data = await api.getUsers();
+            const data = await api.getUsers(pageNumber, 5);
             
-            let listaUsuarios = data.payload || [];
+            let listaUsuarios = data.payload?.users || [];
             
             if (query) {
                 const q = query.toLowerCase();
@@ -36,7 +36,7 @@ function Admin() {
             }
 
             setUsers(listaUsuarios);
-            setTotalPages(1); 
+            setTotalPages(data.payload.totalPages || 1); 
         } catch (err) {
             showErrorAlert(err.message);
             console.error(err);

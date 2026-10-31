@@ -44,7 +44,7 @@ const Login = () => {
         // Guardamos los datos del usuario (opcional, por si los necesitas)
         localStorage.setItem('user', JSON.stringify({
             id: data.payload.id,
-            username: data.payload.userName,
+            username: data.payload.username,
             urlAvatar: data.payload.urlAvatar
         }));
 
